@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stoarp.Backend", "Stoarp.Backend\Stoarp.Backend.csproj", "{82304611-79D4-403F-B27D-2BBEF5F86DB8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stoarp", "Stoarp\Stoarp.csproj", "{906C4893-57E4-4DEA-B371-FB0999D968E9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stoarp.APIClient", "Stoarp.APIClient\Stoarp.APIClient.csproj", "{7FE882B3-50A6-4228-A572-81C5A62C8D7D}"
@@ -18,10 +16,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{82304611-79D4-403F-B27D-2BBEF5F86DB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{82304611-79D4-403F-B27D-2BBEF5F86DB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{82304611-79D4-403F-B27D-2BBEF5F86DB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{82304611-79D4-403F-B27D-2BBEF5F86DB8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{906C4893-57E4-4DEA-B371-FB0999D968E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{906C4893-57E4-4DEA-B371-FB0999D968E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{906C4893-57E4-4DEA-B371-FB0999D968E9}.Release|Any CPU.ActiveCfg = Release|Any CPU

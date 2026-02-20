@@ -26,6 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Stoarp.Backend\Stoarp.Backend.csproj" />
+    <ProjectReference Include="..\Stoarp.APIClient\Stoarp.APIClient.csproj" />
   </ItemGroup>
 </Project>
