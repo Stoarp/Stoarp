@@ -1,6 +1,15 @@
-﻿namespace Stoarp.ViewModels;
+using System;
+using ReactiveUI;
+using Stoarp.Services;
 
-public class MainWindowViewModel : ViewModelBase
+namespace Stoarp.ViewModels;
+
+public class MainWindowViewModel : ViewModelBase, IScreen
 {
-    public string Greeting { get; } = "Welcome to Avalonia!";
+    public RoutingState Router { get; } = new();
+
+    public MainWindowViewModel(IStoatClientService clientService)
+    {
+        Router.Navigate.Execute(new LoginViewModel(this, clientService)).Subscribe();
+    }
 }

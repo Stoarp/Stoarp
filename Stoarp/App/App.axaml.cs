@@ -1,6 +1,8 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Microsoft.Extensions.DependencyInjection;
+using Stoarp.Services;
 using Stoarp.ViewModels;
 using Stoarp.Views;
 
@@ -15,15 +17,19 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        var services = new ServiceCollection();
+        services.AddStoarpServices();
+        var provider = services.BuildServiceProvider();
+        ServiceLocator.Initialize(provider);
+
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainWindowViewModel(),
+                DataContext = provider.GetRequiredService<MainWindowViewModel>(),
             };
         }
 
         base.OnFrameworkInitializationCompleted();
     }
-
 }

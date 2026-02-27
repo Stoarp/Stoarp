@@ -1,0 +1,67 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Color Palette -->
+    <Color x:Key="BackgroundDark">#121212</Color>
+    <Color x:Key="BackgroundMedium">#1E1E1E</Color>
+    <Color x:Key="BackgroundLight">#2C2C2C</Color>
+    <Color x:Key="AccentPrimary">#3A3A3A</Color>
+    <Color x:Key="AccentDark">#2E2E2E</Color>
+    <Color x:Key="AccentLight">#4A4A4A</Color>
+    <Color x:Key="TextPrimary">#E0E0E0</Color>
+    <Color x:Key="TextSecondary">#9E9E9E</Color>
+    <Color x:Key="TextMuted">#616161</Color>
+    <Color x:Key="BorderDefault">#333333</Color>
+    <Color x:Key="BorderFocus">#2196F3</Color>
+    <Color x:Key="SurfaceColor">#252525</Color>
+    <Color x:Key="ErrorColor">#CF6679</Color>
+
+    <!-- Ocean Blue (headings, links, highlights) -->
+    <Color x:Key="OceanPrimary">#2196F3</Color>
+    <Color x:Key="OceanDark">#1976D2</Color>
+    <Color x:Key="OceanLight">#64B5F6</Color>
+
+    <SolidColorBrush x:Key="OceanPrimaryBrush" Color="{StaticResource OceanPrimary}" />
+    <SolidColorBrush x:Key="OceanDarkBrush" Color="{StaticResource OceanDark}" />
+    <SolidColorBrush x:Key="OceanLightBrush" Color="{StaticResource OceanLight}" />
+
+    <SolidColorBrush x:Key="BackgroundDarkBrush" Color="{StaticResource BackgroundDark}" />
+    <SolidColorBrush x:Key="BackgroundMediumBrush" Color="{StaticResource BackgroundMedium}" />
+    <SolidColorBrush x:Key="BackgroundLightBrush" Color="{StaticResource BackgroundLight}" />
+    <SolidColorBrush x:Key="AccentPrimaryBrush" Color="{StaticResource AccentPrimary}" />
+    <SolidColorBrush x:Key="AccentDarkBrush" Color="{StaticResource AccentDark}" />
+    <SolidColorBrush x:Key="AccentLightBrush" Color="{StaticResource AccentLight}" />
+    <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimary}" />
+    <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource TextSecondary}" />
+    <SolidColorBrush x:Key="TextMutedBrush" Color="{StaticResource TextMuted}" />
+    <SolidColorBrush x:Key="BorderDefaultBrush" Color="{StaticResource BorderDefault}" />
+    <SolidColorBrush x:Key="BorderFocusBrush" Color="{StaticResource BorderFocus}" />
+    <SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource SurfaceColor}" />
+    <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource ErrorColor}" />
+
+    <!-- Typography Sizes -->
+    <x:Double x:Key="FontSizeCaption">11</x:Double>
+    <x:Double x:Key="FontSizeBody">14</x:Double>
+    <x:Double x:Key="FontSizeSubtitle">16</x:Double>
+    <x:Double x:Key="FontSizeTitle">20</x:Double>
+    <x:Double x:Key="FontSizeHeader">28</x:Double>
+
+    <!-- Spacing -->
+    <x:Double x:Key="SpacingXs">4</x:Double>
+    <x:Double x:Key="SpacingSm">8</x:Double>
+    <x:Double x:Key="SpacingMd">12</x:Double>
+    <x:Double x:Key="SpacingLg">16</x:Double>
+    <x:Double x:Key="SpacingXl">24</x:Double>
+    <x:Double x:Key="SpacingXxl">32</x:Double>
+
+    <Thickness x:Key="SpacingSmAll">8</Thickness>
+    <Thickness x:Key="SpacingMdAll">12</Thickness>
+    <Thickness x:Key="SpacingLgAll">16</Thickness>
+    <Thickness x:Key="SpacingXlAll">24</Thickness>
+
+    <!-- Corner Radius -->
+    <CornerRadius x:Key="RadiusSm">4</CornerRadius>
+    <CornerRadius x:Key="RadiusMd">8</CornerRadius>
+    <CornerRadius x:Key="RadiusLg">12</CornerRadius>
+
+</ResourceDictionary>

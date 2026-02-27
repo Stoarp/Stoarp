@@ -1,0 +1,71 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Stoarp.ViewModels"
+             xmlns:rxui="http://reactiveui.net"
+             x:Class="Stoarp.Views.LoginView"
+             x:DataType="vm:LoginViewModel">
+
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Border Background="{StaticResource BackgroundMediumBrush}"
+                CornerRadius="{StaticResource RadiusLg}"
+                Padding="48,40"
+                MinWidth="400"
+                BoxShadow="0 8 32 0 #40000000">
+            <StackPanel Spacing="24">
+                <!-- Branding -->
+                <StackPanel Spacing="8" HorizontalAlignment="Center">
+                    <TextBlock Text="Stoarp"
+                               FontSize="{StaticResource FontSizeHeader}"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource OceanPrimaryBrush}"
+                               HorizontalAlignment="Center" />
+                    <TextBlock Text="Sign in to Stoat Chat"
+                               FontSize="{StaticResource FontSizeBody}"
+                               Foreground="{StaticResource TextSecondaryBrush}"
+                               HorizontalAlignment="Center" />
+                </StackPanel>
+
+                <!-- Form -->
+                <StackPanel Spacing="16">
+                    <StackPanel Spacing="6">
+                        <TextBlock Text="Email"
+                                   FontSize="{StaticResource FontSizeCaption}"
+                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                   FontWeight="SemiBold" />
+                        <TextBox Text="{CompiledBinding Email, Mode=TwoWay}"
+                                 Watermark="you@example.com" />
+                    </StackPanel>
+
+                    <StackPanel Spacing="6">
+                        <TextBlock Text="Password"
+                                   FontSize="{StaticResource FontSizeCaption}"
+                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                   FontWeight="SemiBold" />
+                        <TextBox Text="{CompiledBinding Password, Mode=TwoWay}"
+                                 PasswordChar="&#x2022;"
+                                 Watermark="Enter your password" />
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Error -->
+                <TextBlock Text="{CompiledBinding ErrorMessage}"
+                           Foreground="{StaticResource ErrorBrush}"
+                           FontSize="{StaticResource FontSizeCaption}"
+                           IsVisible="{CompiledBinding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                           TextWrapping="Wrap" />
+
+                <!-- Login Button -->
+                <Button Content="Sign In"
+                        Command="{CompiledBinding LoginCommand}"
+                        HorizontalAlignment="Stretch" />
+
+                <!-- Loading indicator -->
+                <ProgressBar IsIndeterminate="True"
+                             IsVisible="{CompiledBinding IsLoggingIn}"
+                             Height="2"
+                             Foreground="{StaticResource OceanPrimaryBrush}"
+                             Background="{StaticResource SurfaceBrush}" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

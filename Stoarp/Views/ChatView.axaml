@@ -1,0 +1,49 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Stoarp.ViewModels"
+             x:Class="Stoarp.Views.ChatView"
+             x:DataType="vm:ChatViewModel">
+
+    <DockPanel Background="{StaticResource BackgroundDarkBrush}">
+        <!-- Channel Header -->
+        <Border DockPanel.Dock="Top"
+                Padding="16,14"
+                BorderBrush="{StaticResource BorderDefaultBrush}"
+                BorderThickness="0,0,0,1">
+            <TextBlock Text="# general"
+                       FontSize="{StaticResource FontSizeSubtitle}"
+                       FontWeight="SemiBold"
+                       Foreground="{StaticResource OceanLightBrush}" />
+        </Border>
+
+        <!-- Message Input -->
+        <Border DockPanel.Dock="Bottom"
+                Padding="16"
+                BorderBrush="{StaticResource BorderDefaultBrush}"
+                BorderThickness="0,1,0,0">
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBox Grid.Column="0"
+                         Text="{CompiledBinding MessageInput, Mode=TwoWay}"
+                         Watermark="Send a message..."
+                         Margin="0,0,8,0" />
+                <Button Grid.Column="1"
+                        Content="Send"
+                        Command="{CompiledBinding SendMessageCommand}" />
+            </Grid>
+        </Border>
+
+        <!-- Message Area -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="16">
+                <TextBlock Text="Welcome to Stoarp"
+                           FontSize="{StaticResource FontSizeTitle}"
+                           FontWeight="Bold"
+                           Foreground="{StaticResource OceanPrimaryBrush}"
+                           Margin="0,0,0,8" />
+                <TextBlock Text="This is the beginning of your conversation."
+                           Foreground="{StaticResource TextSecondaryBrush}"
+                           FontSize="{StaticResource FontSizeBody}" />
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</UserControl>

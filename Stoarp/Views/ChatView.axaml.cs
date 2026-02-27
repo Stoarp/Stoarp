@@ -3,9 +3,9 @@ using Stoarp.ViewModels;
 
 namespace Stoarp.Views;
 
-public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
+public partial class ChatView : ReactiveUserControl<ChatViewModel>
 {
-    public MainWindow()
+    public ChatView()
     {
         InitializeComponent();
     }

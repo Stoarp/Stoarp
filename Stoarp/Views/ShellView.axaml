@@ -1,0 +1,58 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Stoarp.ViewModels"
+             xmlns:rxui="using:ReactiveUI.Avalonia"
+             x:Class="Stoarp.Views.ShellView"
+             x:DataType="vm:ShellViewModel">
+
+    <Grid ColumnDefinitions="72,240,*">
+        <!-- Server Sidebar -->
+        <Border Grid.Column="0"
+                Background="{StaticResource BackgroundDarkBrush}"
+                BorderBrush="{StaticResource BorderDefaultBrush}"
+                BorderThickness="0,0,1,0">
+            <StackPanel Spacing="8" Margin="0,12">
+                <Border Width="48" Height="48"
+                        CornerRadius="{StaticResource RadiusLg}"
+                        Background="{StaticResource OceanPrimaryBrush}"
+                        HorizontalAlignment="Center"
+                        Cursor="Hand">
+                    <TextBlock Text="S"
+                               FontSize="{StaticResource FontSizeTitle}"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource TextPrimaryBrush}"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center" />
+                </Border>
+            </StackPanel>
+        </Border>
+
+        <!-- Channel List -->
+        <Border Grid.Column="1"
+                Background="{StaticResource BackgroundMediumBrush}"
+                BorderBrush="{StaticResource BorderDefaultBrush}"
+                BorderThickness="0,0,1,0">
+            <DockPanel>
+                <Border DockPanel.Dock="Top"
+                        Padding="16,14"
+                        BorderBrush="{StaticResource BorderDefaultBrush}"
+                        BorderThickness="0,0,0,1">
+                    <TextBlock Text="Channels"
+                               FontSize="{StaticResource FontSizeSubtitle}"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource OceanLightBrush}" />
+                </Border>
+                <TextBlock Text="No channels"
+                           Foreground="{StaticResource TextMutedBrush}"
+                           FontSize="{StaticResource FontSizeCaption}"
+                           HorizontalAlignment="Center"
+                           Margin="0,24,0,0" />
+            </DockPanel>
+        </Border>
+
+        <!-- Chat Area -->
+        <rxui:RoutedViewHost Grid.Column="2"
+                             Router="{CompiledBinding Router}"
+                             DefaultContent="{x:Null}" />
+    </Grid>
+</UserControl>
