@@ -137,6 +137,40 @@
         </Style>
     </ControlTheme>
 
+    <!-- Link Button (Hyperlink) -->
+    <ControlTheme x:Key="LinkButton" TargetType="Button">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{StaticResource OceanPrimaryBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeCaption}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="{TemplateBinding Background}"
+                        Padding="{TemplateBinding Padding}">
+                    <ContentPresenter Content="{TemplateBinding Content}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                </Border>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:pointerover">
+            <Setter Property="Foreground" Value="{StaticResource OceanLightBrush}" />
+            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+        </Style>
+        <Style Selector="^:pressed">
+            <Setter Property="Foreground" Value="{StaticResource OceanDarkBrush}" />
+        </Style>
+        <Style Selector="^:disabled">
+            <Setter Property="Opacity" Value="0.5" />
+        </Style>
+    </ControlTheme>
+
     <!-- ScrollViewer with thin scrollbar -->
     <ControlTheme x:Key="{x:Type ScrollBar}" TargetType="ScrollBar">
         <Setter Property="Background" Value="Transparent" />

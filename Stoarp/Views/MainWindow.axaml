@@ -10,5 +10,6 @@
         Background="{StaticResource BackgroundDarkBrush}">
 
     <rxui:RoutedViewHost Router="{CompiledBinding Router}"
-                         DefaultContent="{x:Null}" />
+                         DefaultContent="{x:Null}"
+                         PageTransition="{x:Null}" />
 </Window>

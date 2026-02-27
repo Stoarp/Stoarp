@@ -1,0 +1,1 @@
+This Assets Folder Contains any other Assets Needed for Stoarp, the Main [Assets](../Assets) Folder is only for Icons and other Media Types.

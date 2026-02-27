@@ -53,6 +53,7 @@
         <!-- Chat Area -->
         <rxui:RoutedViewHost Grid.Column="2"
                              Router="{CompiledBinding Router}"
-                             DefaultContent="{x:Null}" />
+                             DefaultContent="{x:Null}"
+                             PageTransition="{x:Null}" />
     </Grid>
 </UserControl>

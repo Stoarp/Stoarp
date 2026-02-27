@@ -1,4 +1,5 @@
 ﻿using Avalonia;
+using Avalonia.WebView.Desktop;
 using ReactiveUI.Avalonia;
 using System;
 
@@ -20,5 +21,6 @@ sealed class Program
             .WithInterFont()
             .LogToTrace()
             .UseReactiveUI()
-            .RegisterReactiveUIViewsFromEntryAssembly();
+            .RegisterReactiveUIViewsFromEntryAssembly()
+            .UseDesktopWebView();
 }

@@ -11,24 +11,32 @@ public class StoatClientService : IStoatClientService
     public StoatClient? Client => _client;
     public bool IsConnected => _client?.IsLoginComplete ?? false;
 
-    public async Task<bool> LoginAsync(string email, string password)
+    public async Task<AccountLogin> LoginAsync(string email, string password)
     {
         try
         {
             _client = new StoatClient(ClientMode.WebSocket);
             var result = await _client.LoginAsync(email, password, "Stoarp Desktop");
-            if (result != null)
+            if (result.ResponseType == LoginResponseType.Success)
             {
                 await _client.StartAsync();
-                return true;
             }
-            return false;
+            return result;
         }
         catch (Exception)
         {
             _client = null;
-            return false;
+            return new AccountLogin
+            {
+                ResponseType = LoginResponseType.Failed
+            };
         }
+    }
+
+    public async Task RegisterAsync(string email, string password, string? captchaToken = null)
+    {
+        var client = new StoatClient(ClientMode.Http);
+        await AccountHelper.CreateAccountAsync(client.Rest, email, password, null, captchaToken);
     }
 
     public async Task DisconnectAsync()

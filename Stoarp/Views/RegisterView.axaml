@@ -1,9 +1,8 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:Stoarp.ViewModels"
-             xmlns:rxui="http://reactiveui.net"
-             x:Class="Stoarp.Views.LoginView"
-             x:DataType="vm:LoginViewModel">
+             x:Class="Stoarp.Views.RegisterView"
+             x:DataType="vm:RegisterViewModel">
 
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
         <Border Background="{StaticResource BackgroundMediumBrush}"
@@ -17,7 +16,7 @@
                     <Image Source="avares://Stoarp/Assets/desktop/Stoarp-Icon-TP.png"
                            Width="160"
                            Height="160" />
-                    <TextBlock Text="Sign in to Stoat Chat"
+                    <TextBlock Text="Create Account"
                                FontSize="{StaticResource FontSizeBody}"
                                Foreground="{StaticResource TextSecondaryBrush}"
                                HorizontalAlignment="Center" />
@@ -41,8 +40,19 @@
                                    FontWeight="SemiBold" />
                         <TextBox Text="{CompiledBinding Password, Mode=TwoWay}"
                                  PasswordChar="&#x2022;"
-                                 Watermark="Enter your password" />
+                                 Watermark="Create a password" />
                     </StackPanel>
+
+                    <StackPanel Spacing="6">
+                        <TextBlock Text="Confirm Password"
+                                   FontSize="{StaticResource FontSizeCaption}"
+                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                   FontWeight="SemiBold" />
+                        <TextBox Text="{CompiledBinding ConfirmPassword, Mode=TwoWay}"
+                                 PasswordChar="&#x2022;"
+                                 Watermark="Confirm your password" />
+                    </StackPanel>
+
                 </StackPanel>
 
                 <!-- Error -->
@@ -52,24 +62,31 @@
                            IsVisible="{CompiledBinding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                            TextWrapping="Wrap" />
 
-                <!-- Login Button -->
-                <Button Content="Sign In"
-                        Command="{CompiledBinding LoginCommand}"
+                <!-- Success -->
+                <TextBlock Text="{CompiledBinding SuccessMessage}"
+                           Foreground="{StaticResource OceanPrimaryBrush}"
+                           FontSize="{StaticResource FontSizeCaption}"
+                           IsVisible="{CompiledBinding SuccessMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                           TextWrapping="Wrap" />
+
+                <!-- Register Button -->
+                <Button Content="Create Account"
+                        Command="{CompiledBinding RegisterCommand}"
                         HorizontalAlignment="Stretch" />
 
-                <!-- Register Link -->
+                <!-- Back to Login -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="4">
-                    <TextBlock Text="Don't have an account?"
+                    <TextBlock Text="Already have an account?"
                                Foreground="{StaticResource TextSecondaryBrush}"
                                FontSize="{StaticResource FontSizeCaption}" />
-                    <Button Content="Create Account"
-                            Command="{CompiledBinding NavigateToRegisterCommand}"
+                    <Button Content="Sign In"
+                            Command="{CompiledBinding BackToLoginCommand}"
                             Theme="{StaticResource LinkButton}" />
                 </StackPanel>
 
                 <!-- Loading indicator -->
                 <ProgressBar IsIndeterminate="True"
-                             IsVisible="{CompiledBinding IsLoggingIn}"
+                             IsVisible="{CompiledBinding IsRegistering}"
                              Height="2"
                              Foreground="{StaticResource OceanPrimaryBrush}"
                              Background="{StaticResource SurfaceBrush}" />

@@ -7,6 +7,7 @@ public interface IStoatClientService
 {
     StoatClient? Client { get; }
     bool IsConnected { get; }
-    Task<bool> LoginAsync(string email, string password);
+    Task<AccountLogin> LoginAsync(string email, string password);
+    Task RegisterAsync(string email, string password, string? captchaToken = null);
     Task DisconnectAsync();
 }
