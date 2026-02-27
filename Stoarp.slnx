@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Stoarp/Stoarp.csproj" />
+  <Project Path="StoatSharp/StoatSharp/StoatSharp.csproj" />
+</Solution>
