@@ -14,11 +14,9 @@
             <StackPanel Spacing="24">
                 <!-- Branding -->
                 <StackPanel Spacing="8" HorizontalAlignment="Center">
-                    <TextBlock Text="Stoarp"
-                               FontSize="{StaticResource FontSizeHeader}"
-                               FontWeight="Bold"
-                               Foreground="{StaticResource OceanPrimaryBrush}"
-                               HorizontalAlignment="Center" />
+                    <Image Source="avares://Stoarp/Assets/desktop/Stoarp-Icon-TP.png"
+                           Width="160"
+                           Height="160" />
                     <TextBlock Text="Sign in to Stoat Chat"
                                FontSize="{StaticResource FontSizeBody}"
                                Foreground="{StaticResource TextSecondaryBrush}"
