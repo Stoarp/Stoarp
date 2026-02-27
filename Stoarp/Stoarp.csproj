@@ -34,7 +34,6 @@
     </PackageReference>
     <PackageReference Include="ReactiveUI.Avalonia" Version="11.3.8" />
     <PackageReference Include="SIPSorcery" Version="10.0.3" />
-    <!-- Cross-platform WebView: WebView.Avalonia -->
     <PackageReference Include="WebView.Avalonia" Version="11.0.0.1" />
     <PackageReference Include="WebView.Avalonia.Desktop" Version="11.0.0.1" />
     <PackageReference Include="WebView.Avalonia.Linux" Version="11.0.0.1" />

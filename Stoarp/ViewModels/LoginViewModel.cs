@@ -76,12 +76,13 @@ public class LoginViewModel : RoutableViewModelBase
 
             try
             {
+                ServiceLocator.GetRequiredService<LogService>().LogInfo("Logging in into User Account");
                 var result = await clientService.LoginAsync(Email, Password);
                 await HandleLoginResult(result, clientService);
             }
             catch (Exception ex)
             {
-                ErrorMessage = ex.Message;
+                ServiceLocator.GetRequiredService<LogService>().LogError("Failed to Log in: " + ex.ToString());
             }
             finally
             {

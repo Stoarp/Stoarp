@@ -72,11 +72,8 @@ public class RegisterViewModel : RoutableViewModelBase
         set
         {
             this.RaiseAndSetIfChanged(ref _captchaToken, value);
-            CaptchaButtonText = string.IsNullOrEmpty(value) ? "Complete CAPTCHA" : "CAPTCHA Completed";
         }
     }
-
-    public string CaptchaButtonText { get; private set; } = "Complete CAPTCHA";
 
     public ReactiveCommand<Unit, Unit> RegisterCommand { get; }
     public ReactiveCommand<Unit, Unit> BackToLoginCommand { get; }
@@ -106,7 +103,7 @@ public class RegisterViewModel : RoutableViewModelBase
             {
                 if (IsCaptchaRequired && !string.IsNullOrEmpty(CaptchaToken))
                 {
-                    ErrorMessage = "Captcha verification comming Soon!";
+                    ServiceLocator.GetRequiredService<LogService>().LogWarning("Captacha Needed");
                     return;
                 }
 
@@ -119,7 +116,7 @@ public class RegisterViewModel : RoutableViewModelBase
             }
             catch (Exception ex)
             {
-                ErrorMessage = $"Registration failed: {ex.Message}";
+                ServiceLocator.GetRequiredService<LogService>().LogError($"Registration failed: {ex.Message}");
             }
             finally
             {
