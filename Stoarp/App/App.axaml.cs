@@ -19,6 +19,7 @@ public partial class App : Application
     {
         var services = new ServiceCollection();
         services.AddStoarpServices();
+        services.AddSingleton<CacheService>();
         var provider = services.BuildServiceProvider();
         ServiceLocator.Initialize(provider);
 
