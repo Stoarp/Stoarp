@@ -1,3 +1,6 @@
 [submodule "Stoarp/Assets"]
 	path = Stoarp/Assets
 	url = https://github.com/stoatchat/assets.git
+[submodule "StoatSharp"]
+	path = StoatSharp
+	url = https://github.com/Stoarp/StoatSharp.git
