@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StoatSharp\StoatSharp\StoatSharp.csproj" />
+    <ProjectReference Include="..\StoatSharp\StoatSharp.Voice\StoatSharp.Voice.csproj" />
   </ItemGroup>
 
   <ItemGroup>
