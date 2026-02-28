@@ -15,7 +15,7 @@ public class StoatClientService : IStoatClientService
     {
         try
         {
-            _client = new StoatClient(ClientMode.WebSocket);
+            _client = new StoatClient(ClientMode.WebSocket, AppConfig.GetConfig());
             var result = await _client.LoginAsync(email, password, "Stoarp Desktop");
             if (result.ResponseType == LoginResponseType.Success)
             {
@@ -35,7 +35,7 @@ public class StoatClientService : IStoatClientService
 
     public async Task RegisterAsync(string email, string password, string? captchaToken = null)
     {
-        var client = new StoatClient(ClientMode.Http);
+        var client = new StoatClient(ClientMode.Http, AppConfig.GetConfig());
         await AccountHelper.CreateAccountAsync(client.Rest, email, password, null, captchaToken);
     }
 

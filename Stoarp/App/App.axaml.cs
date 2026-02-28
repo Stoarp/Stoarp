@@ -6,6 +6,7 @@ using Stoarp.Services;
 using Stoarp.ViewModels;
 using Stoarp.Views;
 using AvaloniaWebView;
+using StoatSharp;
 
 namespace Stoarp;
 
@@ -22,6 +23,7 @@ public partial class App : Application
         services.AddStoarpServices();
         services.AddSingleton<CacheService>();
         services.AddSingleton<LogService>();
+        services.AddSingleton<StoatClient>();
         var provider = services.BuildServiceProvider();
         ServiceLocator.Initialize(provider);
 

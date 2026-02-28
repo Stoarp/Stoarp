@@ -101,7 +101,7 @@ public class RegisterViewModel : RoutableViewModelBase
 
             try
             {
-                if (IsCaptchaRequired && !string.IsNullOrEmpty(CaptchaToken))
+                if (IsCaptchaRequired && string.IsNullOrEmpty(CaptchaToken))
                 {
                     ServiceLocator.GetRequiredService<LogService>().LogWarning("Captacha Needed");
                     return;
@@ -116,7 +116,8 @@ public class RegisterViewModel : RoutableViewModelBase
             }
             catch (Exception ex)
             {
-                ServiceLocator.GetRequiredService<LogService>().LogError($"Registration failed: {ex.Message}");
+                ServiceLocator.GetRequiredService<LogService>().LogError($"Registration failed: {ex}");
+                ErrorMessage = $"Registration failed: {ex.Message}";
             }
             finally
             {
