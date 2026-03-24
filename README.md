@@ -3,7 +3,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/.NET-8.0-blue?style=for-the-badge&logo=dotnet&logoColor=white" alt=".NET Version">
   <img src="https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-blue?style=for-the-badge" alt="Platforms">
-  <img src="https://img.shields.io/github/license/Stoarp/Stoarp?style=for-the-badge" alt="License">
+  <img src="https://img.shields.io/badge/license-Apache--2.0-blue?style=for-the-badge" alt="License">
 </p>
 
 <p align="center">
