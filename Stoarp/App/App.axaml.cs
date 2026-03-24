@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Stoarp.Services;
 using Stoarp.ViewModels;
 using Stoarp.Views;
-using AvaloniaWebView;
 using StoatSharp;
 
 namespace Stoarp;
@@ -36,11 +35,5 @@ public partial class App : Application
         }
 
         base.OnFrameworkInitializationCompleted();
-    }
-
-    public override void RegisterServices()
-    {
-        base.RegisterServices();
-        AvaloniaWebViewBuilder.Initialize(default);
     }
 }
