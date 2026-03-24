@@ -19,7 +19,6 @@
   <li>Native cross-platform desktop experience (Windows, macOS, Linux)</li>
   <li>Clean, modern chat interface</li>
   <li>Voice chat capabilities (VoIP/SIP)</li>
-  <li>Built on robust, scalable architecture</li>
 </ul>
 
 ---
