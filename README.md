@@ -1,4 +1,4 @@
-# <img src="https://stoat.chat/favicon.svg" width="32" style="vertical-align: middle; border-radius: 8px;" /> Stoarp
+# <img src="Stoarp/Assets/desktop/Stoarp-Icon-TP.png" width="32" style="vertical-align: middle; border-radius: 8px;" /> Stoarp
 
 <p align="center">
   <img src="https://img.shields.io/badge/.NET-8.0-blue?style=for-the-badge&logo=dotnet&logoColor=white" alt=".NET Version">
