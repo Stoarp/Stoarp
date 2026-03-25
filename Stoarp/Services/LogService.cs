@@ -22,6 +22,7 @@ public class LogService : IDisposable
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "Stoarp"
         );
+        Directory.CreateDirectory(_root);
         logFile = File.CreateText(Path.Combine(_root, "Stoarp.log"));
     }
 

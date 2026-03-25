@@ -1,12 +1,10 @@
 using System;
 using System.IO;
 using System.Net.Http;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
-using Avalonia.Labs.Controls;
+using Microsoft.EntityFrameworkCore;
 
 namespace Stoarp.Services;
 
@@ -15,6 +13,7 @@ public sealed class CacheService : IDisposable
     private readonly string _root;
     private readonly HttpClient _http;
     private readonly SemaphoreSlim _lock = new(1, 1);
+    private readonly CacheDbContext _db;
 
     public CacheService(string? rootPath = null, HttpClient? http = null)
     {
@@ -26,20 +25,29 @@ public sealed class CacheService : IDisposable
 
         Directory.CreateDirectory(_root);
         _http = http ?? new HttpClient();
+        
+        _db = new CacheDbContext();
+        _db.Database.EnsureCreated();
     }
 
-    /// <summary>
-    /// Generic raw download plus cache
-    /// </summary>
     public async Task<Stream> GetAsync(string url, TimeSpan? maxAge = null)
     {
-        var path = GetCachePath(url);
-
         await _lock.WaitAsync();
         try
         {
-            if (File.Exists(path) && !IsExpired(path, maxAge))
-                return File.OpenRead(path);
+            var entry = await _db.CacheEntries
+                .FirstOrDefaultAsync(e => e.Key == url);
+
+            if (entry != null && !IsExpired(entry, maxAge) && !string.IsNullOrEmpty(entry.LocalPath))
+            {
+                var fullPath = Path.Combine(_root, entry.LocalPath);
+                if (File.Exists(fullPath))
+                {
+                    entry.LastAccessedAt = DateTime.UtcNow;
+                    await _db.SaveChangesAsync();
+                    return File.OpenRead(fullPath);
+                }
+            }
         }
         finally
         {
@@ -47,23 +55,40 @@ public sealed class CacheService : IDisposable
         }
 
         var bytes = await _http.GetByteArrayAsync(url);
-        await WriteAtomicAsync(path, bytes);
+        var ext = GetExtension(url);
+        var fileName = $"{Guid.NewGuid()}{ext}";
+        
+        await _lock.WaitAsync();
+        try
+        {
+            await WriteAtomicAsync(Path.Combine(_root, fileName), bytes);
+            
+            var cacheEntry = new CacheEntry
+            {
+                Id = Guid.NewGuid(),
+                Key = url,
+                LocalPath = fileName,
+                CreatedAt = DateTime.UtcNow,
+                LastAccessedAt = DateTime.UtcNow,
+                ExpiresAt = maxAge.HasValue ? DateTime.UtcNow + maxAge.Value : null
+            };
+            
+            _db.CacheEntries.Add(cacheEntry);
+            await _db.SaveChangesAsync();
+        }
+        finally
+        {
+            _lock.Release();
+        }
 
         return new MemoryStream(bytes, writable: false);
     }
 
-    /// <summary>
-    /// Returns cached GIF/WebP/animated asset as a Stream for AsyncImage
-    /// </summary>
     public async Task<Stream> GetAnimatedAsync(string url, TimeSpan? maxAge = null)
     {
-        // Just fetch as raw bytes since AsyncImage will decode and animate
         return await GetAsync(url, maxAge);
     }
 
-    /// <summary>
-    /// Returns Bitmap for static images
-    /// </summary>
     public async Task<Bitmap> GetBitmapAsync(string url, TimeSpan? maxAge = null)
     {
         var stream = await GetAsync(url, maxAge);
@@ -79,32 +104,85 @@ public sealed class CacheService : IDisposable
     public async Task<string> GetTextAsync(string url, TimeSpan? maxAge = null)
     {
         var data = await GetBytesAsync(url, maxAge);
-        return Encoding.UTF8.GetString(data);
+        return System.Text.Encoding.UTF8.GetString(data);
     }
 
-    public Task<bool> ExistsAsync(string url)
-        => Task.FromResult(File.Exists(GetCachePath(url)));
-
-    public Task ClearAsync()
+    public async Task<bool> ExistsAsync(string url)
     {
-        if (Directory.Exists(_root))
-            Directory.Delete(_root, recursive: true);
-
-        Directory.CreateDirectory(_root);
-
-        return Task.CompletedTask;
+        var entry = await _db.CacheEntries
+            .FirstOrDefaultAsync(e => e.Key == url);
+        
+        if (entry == null || string.IsNullOrEmpty(entry.LocalPath))
+            return false;
+            
+        return File.Exists(Path.Combine(_root, entry.LocalPath));
     }
 
-    public Task<long> GetCacheSizeAsync()
+    public async Task ClearAsync()
+    {
+        await _lock.WaitAsync();
+        try
+        {
+            if (Directory.Exists(_root))
+                Directory.Delete(_root, recursive: true);
+
+            Directory.CreateDirectory(_root);
+            
+            _db.CacheEntries.RemoveRange(_db.CacheEntries);
+            await _db.SaveChangesAsync();
+        }
+        finally
+        {
+            _lock.Release();
+        }
+    }
+
+    public async Task<long> GetCacheSizeAsync()
     {
         if (!Directory.Exists(_root))
-            return Task.FromResult(0L);
+            return 0;
 
         long size = 0;
         foreach (var file in Directory.EnumerateFiles(_root, "*", SearchOption.AllDirectories))
             size += new FileInfo(file).Length;
 
-        return Task.FromResult(size);
+        return size;
+    }
+
+    public async Task<CacheEntry?> GetCachedEntryAsync(string key)
+    {
+        return await _db.CacheEntries
+            .FirstOrDefaultAsync(e => e.Key == key);
+    }
+
+    public async Task SetCacheEntryAsync(string key, string? localPath = null, string? value = null, TimeSpan? maxAge = null)
+    {
+        var existing = await _db.CacheEntries
+            .FirstOrDefaultAsync(e => e.Key == key);
+
+        if (existing != null)
+        {
+            existing.LastAccessedAt = DateTime.UtcNow;
+            if (localPath != null) existing.LocalPath = localPath;
+            if (value != null) existing.Value = value;
+            if (maxAge.HasValue) existing.ExpiresAt = DateTime.UtcNow + maxAge.Value;
+        }
+        else
+        {
+            var entry = new CacheEntry
+            {
+                Id = Guid.NewGuid(),
+                Key = key,
+                LocalPath = localPath,
+                Value = value,
+                CreatedAt = DateTime.UtcNow,
+                LastAccessedAt = DateTime.UtcNow,
+                ExpiresAt = maxAge.HasValue ? DateTime.UtcNow + maxAge.Value : null
+            };
+            _db.CacheEntries.Add(entry);
+        }
+
+        await _db.SaveChangesAsync();
     }
 
     private static async Task<byte[]> ReadAllAsync(Stream input)
@@ -114,10 +192,11 @@ public sealed class CacheService : IDisposable
         return ms.ToArray();
     }
 
-    private static bool IsExpired(string path, TimeSpan? maxAge)
+    private static bool IsExpired(CacheEntry entry, TimeSpan? maxAge)
     {
-        if (maxAge is null) return false;
-        return DateTime.UtcNow - File.GetLastWriteTimeUtc(path) > maxAge;
+        if (maxAge is null && entry.ExpiresAt is null) return false;
+        if (maxAge is null) return DateTime.UtcNow > entry.ExpiresAt;
+        return DateTime.UtcNow - entry.LastAccessedAt > maxAge;
     }
 
     private async Task WriteAtomicAsync(string path, byte[] data)
@@ -132,36 +211,24 @@ public sealed class CacheService : IDisposable
         File.Move(temp, path);
     }
 
-    private string GetCachePath(string url)
+    private static string GetExtension(string url)
     {
-        var hash = Hash(url);
-        var ext = Path.GetExtension(new Uri(url).AbsolutePath);
-
-        // Force .gif for animated assets if extension is GIF
-        if (!string.IsNullOrWhiteSpace(ext))
-            ext = ext.ToLower();
-
-        if (string.IsNullOrWhiteSpace(ext))
-            ext = ".bin";
-
-        return Path.Combine(_root, $"{hash}{ext}");
-    }
-
-    private static string Hash(string input)
-    {
-        using var sha = SHA256.Create();
-        var bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(input));
-        var sb = new StringBuilder(bytes.Length * 2);
-
-        foreach (var b in bytes)
-            sb.Append(b.ToString("x2"));
-
-        return sb.ToString();
+        try
+        {
+            var ext = Path.GetExtension(new Uri(url).AbsolutePath);
+            if (!string.IsNullOrWhiteSpace(ext))
+                return ext.ToLower();
+        }
+        catch
+        {
+        }
+        return ".bin";
     }
 
     public void Dispose()
     {
         _http.Dispose();
         _lock.Dispose();
+        _db.Dispose();
     }
 }

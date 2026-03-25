@@ -6,8 +6,7 @@ public class AppConfig
     {
         var config = new ClientConfig();
         config.Debug.LogRestRequest = true;
-        config.Debug.LogRestRequestJson = true;
-        config.LogMode = StoatLogSeverity.Debug;
+        config.LogMode = StoatLogSeverity.Info;
         return config;
     }
 }

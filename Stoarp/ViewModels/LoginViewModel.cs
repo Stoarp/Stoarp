@@ -102,7 +102,7 @@ public class LoginViewModel : RoutableViewModelBase
         switch (result.ResponseType)
         {
             case LoginResponseType.Success:
-                var shell = new ShellViewModel(HostScreen, clientService);
+                var shell = new HomeViewModel(HostScreen, clientService, ServiceLocator.GetRequiredService<CacheService>());
                 await HostScreen.Router.Navigate.Execute(shell);
                 break;
 

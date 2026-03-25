@@ -1,0 +1,52 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Stoarp.ViewModels"
+             x:Class="Stoarp.Views.HomeView"
+             x:DataType="vm:HomeViewModel">
+
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Border Background="{StaticResource BackgroundMediumBrush}"
+                CornerRadius="{StaticResource RadiusLg}"
+                Padding="64,56"
+                MinWidth="480"
+                BoxShadow="0 8 32 0 #40000000">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                <Image Source="avares://Stoarp/Assets/desktop/Stoarp-Icon-TP.png"
+                       Width="200"
+                       HorizontalAlignment="Center" />
+                <TextBlock Text="Coming Soon"
+                           FontSize="72"
+                           FontWeight="Bold"
+                           FontStyle="Italic"
+                           Foreground="{StaticResource TextPrimaryBrush}"
+                           HorizontalAlignment="Center" />
+                <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center" Margin="0,16,0,0">
+                    <TextBlock Text="Logged in as"
+                               FontSize="{StaticResource FontSizeBody}"
+                               Foreground="{StaticResource TextSecondaryBrush}"
+                               VerticalAlignment="Center" />
+                    <Panel Width="32" Height="32">
+                        <Border CornerRadius="16"
+                                Background="{StaticResource OceanPrimaryBrush}"
+                                IsVisible="{Binding AvatarBitmap, Converter={x:Static ObjectConverters.IsNull}}" />
+                        <Border CornerRadius="16"
+                                ClipToBounds="True"
+                                IsVisible="{Binding AvatarBitmap, Converter={x:Static ObjectConverters.IsNotNull}}">
+                            <Image Source="{Binding AvatarBitmap}"
+                                   Width="32" Height="32"
+                                   Stretch="UniformToFill" />
+                        </Border>
+                    </Panel>
+                    <TextBlock Text="{Binding DisplayName}"
+                               FontSize="{StaticResource FontSizeBody}"
+                               Foreground="{StaticResource TextPrimaryBrush}"
+                               VerticalAlignment="Center" />
+                    <TextBlock Text="{Binding UserName}"
+                               FontSize="{StaticResource FontSizeBody}"
+                               Foreground="{StaticResource TextSecondaryBrush}"
+                               VerticalAlignment="Center" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

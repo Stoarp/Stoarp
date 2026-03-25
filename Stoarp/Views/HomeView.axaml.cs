@@ -3,9 +3,9 @@ using Stoarp.ViewModels;
 
 namespace Stoarp.Views;
 
-public partial class ShellView : ReactiveUserControl<ShellViewModel>
+public partial class HomeView : ReactiveUserControl<HomeViewModel>
 {
-    public ShellView()
+    public HomeView()
     {
         InitializeComponent();
     }
