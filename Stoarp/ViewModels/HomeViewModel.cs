@@ -24,7 +24,7 @@ public class HomeViewModel : RoutableViewModelBase, IScreen
         var client = clientService.Client;
         if (client?.CurrentUser != null)
         {
-            UserName = client.CurrentUser.Username;
+            UserName = string.Format("({0})", client.CurrentUser.Username);
             DisplayName = client.CurrentUser.DisplayName ?? client.CurrentUser.Username;
             AvatarUrl = client.CurrentUser.GetAvatarUrl();
 
